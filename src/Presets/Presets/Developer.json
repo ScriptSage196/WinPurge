@@ -1,0 +1,45 @@
+{
+  "name": "Developer",
+  "version": "2.0",
+  "description": "Developer-focused - keeps dev tools, removes bloatware, optimizes for coding",
+  "category": "Development",
+  "tweaks": [
+    {
+      "name": "Disable Telemetry",
+      "function": "Disable-Telemetry",
+      "description": "Remove telemetry"
+    },
+    {
+      "name": "Remove Bloatware",
+      "function": "Remove-Bloatware",
+      "params": { "Preserve": ["Microsoft.VisualStudio", "Microsoft.VisualStudioCode"] },
+      "description": "Remove bloatware, keep dev tools"
+    },
+    {
+      "name": "Disable Unnecessary Services",
+      "function": "Disable-UnnecessaryServices",
+      "description": "Disable non-essential services"
+    },
+    {
+      "name": "Show Hidden Files",
+      "function": "Show-HiddenFiles",
+      "description": "Show hidden files in File Explorer"
+    },
+    {
+      "name": "Apply Context Menu Tweaks",
+      "function": "Apply-ContextMenuTweaks",
+      "description": "Add power-user context menu options"
+    },
+    {
+      "name": "Set File Explorer to ThisPC",
+      "function": "Set-FileExplorerStartup",
+      "params": { "Location": "ThisPC" },
+      "description": "Start in This PC for better navigation"
+    },
+    {
+      "name": "Remove Copilot",
+      "function": "Remove-WindowsCopilot",
+      "description": "Remove unnecessary AI features"
+    }
+  ]
+}

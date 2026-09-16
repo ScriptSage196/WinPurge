@@ -1,0 +1,43 @@
+{
+  "name": "Standard",
+  "version": "2.0",
+  "description": "Balanced tweaks - removes telemetry and bloatware while maintaining compatibility",
+  "category": "General",
+  "tweaks": [
+    {
+      "name": "Disable Telemetry",
+      "function": "Disable-Telemetry",
+      "description": "Remove telemetry services"
+    },
+    {
+      "name": "Remove Bloatware",
+      "function": "Remove-Bloatware",
+      "description": "Remove bloatware apps"
+    },
+    {
+      "name": "Disable Unnecessary Services",
+      "function": "Disable-UnnecessaryServices",
+      "description": "Disable safe-to-disable services"
+    },
+    {
+      "name": "Disable Activity History",
+      "function": "Disable-ActivityHistory",
+      "description": "Stop activity tracking"
+    },
+    {
+      "name": "Disable App Suggestions",
+      "function": "Disable-AppSuggestions",
+      "description": "Remove app suggestions"
+    },
+    {
+      "name": "Remove Copilot",
+      "function": "Remove-WindowsCopilot",
+      "description": "Remove Windows Copilot"
+    },
+    {
+      "name": "Hide Taskbar Search",
+      "function": "Hide-TaskbarSearch",
+      "description": "Clean up taskbar"
+    }
+  ]
+}

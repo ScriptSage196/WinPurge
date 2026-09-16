@@ -1,0 +1,45 @@
+{
+  "name": "Gaming",
+  "version": "2.0",
+  "description": "Optimized for gaming performance - removes bloatware, disables telemetry, optimizes services",
+  "category": "Performance",
+  "tweaks": [
+    {
+      "name": "Disable Telemetry",
+      "function": "Disable-Telemetry",
+      "description": "Remove Windows telemetry and data collection"
+    },
+    {
+      "name": "Remove Bloatware",
+      "function": "Remove-Bloatware",
+      "description": "Uninstall unnecessary UWP apps"
+    },
+    {
+      "name": "Disable Unnecessary Services",
+      "function": "Disable-UnnecessaryServices",
+      "params": { "Aggressive": true },
+      "description": "Disable redundant services for performance"
+    },
+    {
+      "name": "Disable Activity History",
+      "function": "Disable-ActivityHistory",
+      "description": "Stop tracking user activity"
+    },
+    {
+      "name": "Optimize Visual Effects",
+      "function": "Optimize-VisualEffects",
+      "params": { "Mode": "Best Performance" },
+      "description": "Disable animations for better performance"
+    },
+    {
+      "name": "Remove Copilot",
+      "function": "Remove-WindowsCopilot",
+      "description": "Remove AI Copilot integration"
+    },
+    {
+      "name": "Disable Modern Standby Network",
+      "function": "Disable-ModernStandbyNetwork",
+      "description": "Prevent network activity during sleep"
+    }
+  ]
+}

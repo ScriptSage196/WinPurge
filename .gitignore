@@ -1,0 +1,7 @@
+.github/
+plugins/
+*.log
+*.tmp
+WinPurge-Standalone.ps1
+.DS_Store
+Thumbs.db

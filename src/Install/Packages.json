@@ -1,0 +1,64 @@
+{
+  "packages": [
+    {
+      "name": "Firefox",
+      "id": "Mozilla.Firefox",
+      "category": "Browser",
+      "description": "Privacy-focused web browser"
+    },
+    {
+      "name": "7-Zip",
+      "id": "7zip.7zip",
+      "category": "Utilities",
+      "description": "Powerful archive utility"
+    },
+    {
+      "name": "Everything",
+      "id": "voidtools.Everything",
+      "category": "Utilities",
+      "description": "Fast file search tool"
+    },
+    {
+      "name": "VLC Media Player",
+      "id": "VideoLAN.VLC",
+      "category": "Media",
+      "description": "Universal media player"
+    },
+    {
+      "name": "Notepad++",
+      "id": "Notepad++.Notepad++",
+      "category": "Development",
+      "description": "Advanced text editor"
+    },
+    {
+      "name": "Python",
+      "id": "Python.Python.3.11",
+      "category": "Development",
+      "description": "Python programming language"
+    },
+    {
+      "name": "Git",
+      "id": "Git.Git",
+      "category": "Development",
+      "description": "Version control system"
+    },
+    {
+      "name": "VS Code",
+      "id": "Microsoft.VisualStudioCode",
+      "category": "Development",
+      "description": "Advanced code editor"
+    },
+    {
+      "name": "Brave Browser",
+      "id": "BraveSoftware.BraveBrowser",
+      "category": "Browser",
+      "description": "Privacy-respecting browser"
+    },
+    {
+      "name": "OBS Studio",
+      "id": "OBSProject.OBSStudio",
+      "category": "Media",
+      "description": "Open source streaming/recording"
+    }
+  ]
+}

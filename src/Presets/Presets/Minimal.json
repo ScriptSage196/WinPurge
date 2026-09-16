@@ -1,0 +1,60 @@
+{
+  "name": "Minimal",
+  "version": "2.0",
+  "description": "Bare-bones Windows - removes everything non-essential for maximum privacy and minimal resource usage",
+  "category": "Privacy",
+  "tweaks": [
+    {
+      "name": "Disable Telemetry",
+      "function": "Disable-Telemetry",
+      "description": "Aggressive telemetry removal"
+    },
+    {
+      "name": "Remove Bloatware",
+      "function": "Remove-Bloatware",
+      "description": "Remove all default UWP apps"
+    },
+    {
+      "name": "Disable Unnecessary Services",
+      "function": "Disable-UnnecessaryServices",
+      "params": { "Aggressive": true },
+      "description": "Disable most optional services"
+    },
+    {
+      "name": "Disable Activity History",
+      "function": "Disable-ActivityHistory",
+      "description": "Stop tracking everything"
+    },
+    {
+      "name": "Disable App Suggestions",
+      "function": "Disable-AppSuggestions",
+      "description": "Remove app recommendations"
+    },
+    {
+      "name": "Disable Start Menu Suggestions",
+      "function": "Disable-StartMenuSuggestions",
+      "description": "Clean up Start Menu"
+    },
+    {
+      "name": "Remove Copilot",
+      "function": "Remove-WindowsCopilot",
+      "description": "Remove all AI features"
+    },
+    {
+      "name": "Block AI Reinstall",
+      "function": "Block-AIReinstall",
+      "description": "Prevent AI features from coming back"
+    },
+    {
+      "name": "Disable Search AI",
+      "function": "Disable-SearchAI",
+      "description": "Remove AI from Windows Search"
+    },
+    {
+      "name": "Enable DNS over HTTPS",
+      "function": "Enable-DNSOverHTTPS",
+      "params": { "Provider": "Cloudflare" },
+      "description": "Secure DNS configuration"
+    }
+  ]
+}
