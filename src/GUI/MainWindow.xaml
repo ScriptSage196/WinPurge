@@ -1,0 +1,529 @@
+<Window x:Class="WinPurge.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="WinPurge v2.0 - Advanced Windows Optimization" 
+        Height="900" 
+        Width="1400"
+        Background="{DynamicResource BackgroundBrush}"
+        Foreground="{DynamicResource TextBrush}"
+        WindowStartupLocation="CenterScreen"
+        Icon="pack://application:,,,/Resources/winpurge.ico">
+    
+    <Window.Resources>
+        <!-- Theme Detection and Styling -->
+        <SolidColorBrush x:Key="BackgroundBrush" Color="#1E1E1E"/>
+        <SolidColorBrush x:Key="TextBrush" Color="#FFFFFF"/>
+        <SolidColorBrush x:Key="AccentBrush" Color="#0078D4"/>
+        <SolidColorBrush x:Key="BorderBrush" Color="#3F3F3F"/>
+        <SolidColorBrush x:Key="ButtonHoverBrush" Color="#2D2D2D"/>
+        <SolidColorBrush x:Key="SuccessBrush" Color="#107C10"/>
+        <SolidColorBrush x:Key="WarningBrush" Color="#FFB900"/>
+        <SolidColorBrush x:Key="ErrorBrush" Color="#E81123"/>
+        
+        <!-- Button Styles -->
+        <Style TargetType="Button" x:Key="ModernButton">
+            <Setter Property="Background" Value="{DynamicResource AccentBrush}"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Padding" Value="12,8"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Border.CornerRadius" Value="4"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                                BorderThickness="0" 
+                                CornerRadius="4" 
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#106EBE"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#005A9E"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+        <!-- Tab Item Style -->
+        <Style TargetType="TabItem">
+            <Setter Property="Background" Value="{DynamicResource BackgroundBrush}"/>
+            <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
+            <Setter Property="Padding" Value="16,12"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TabItem">
+                        <Grid>
+                            <Border Name="Border" Background="{DynamicResource BackgroundBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="0,0,0,2" Padding="{TemplateBinding Padding}">
+                                <ContentPresenter x:Name="ContentSite" VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Header" RecognizesAccessKey="True"/>
+                            </Border>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource AccentBrush}"/>
+                                <Setter Property="Foreground" Value="{DynamicResource AccentBrush}"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Foreground" Value="{DynamicResource AccentBrush}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+        <!-- TextBox Style -->
+        <Style TargetType="TextBox">
+            <Setter Property="Background" Value="#2D2D2D"/>
+            <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="8"/>
+            <Setter Property="FontSize" Value="12"/>
+        </Style>
+        
+        <!-- ScrollBar Style -->
+        <Style TargetType="ScrollBar">
+            <Setter Property="Background" Value="{DynamicResource BackgroundBrush}"/>
+            <Setter Property="Foreground" Value="{DynamicResource AccentBrush}"/>
+        </Style>
+    </Window.Resources>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        
+        <!-- Header -->
+        <Border Grid.Row="0" Background="#0F0F0F" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="0,0,0,1" Padding="20,15">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                
+                <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
+                    <TextBlock Text="WinPurge" FontSize="20" FontWeight="Bold" Foreground="{DynamicResource AccentBrush}" VerticalAlignment="Center"/>
+                    <TextBlock Text="v2.0" FontSize="12" Foreground="#888888" Margin="8,0,0,0" VerticalAlignment="Center"/>
+                    <TextBlock Text="Advanced Windows Debloater" FontSize="12" Foreground="#888888" Margin="16,0,0,0" VerticalAlignment="Center"/>
+                </StackPanel>
+                
+                <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="8" VerticalAlignment="Center" Margin="0,0,16,0">
+                    <Button Name="DryRunToggleButton" Content="🔍 Dry-Run: OFF" Style="{StaticResource ModernButton}" Background="#FF9500" Width="140" Click="DryRunToggle_Click"/>
+                    <Button Name="VerboseToggleButton" Content="📝 Verbose: OFF" Style="{StaticResource ModernButton}" Width="140" Click="VerboseToggle_Click"/>
+                </StackPanel>
+                
+                <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+                    <Button Name="SettingsButton" Content="⚙️ Settings" Style="{StaticResource ModernButton}" Width="100" Click="Settings_Click"/>
+                    <Button Name="HelpButton" Content="❓ Help" Style="{StaticResource ModernButton}" Background="#6C757D" Width="100" Click="Help_Click"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+        
+        <!-- Main Content -->
+        <TabControl Grid.Row="1" Margin="0">
+            <!-- Tweaks Tab -->
+            <TabItem Header="🔧 Tweaks" Name="TweaksTab">
+                <Grid Background="{DynamicResource BackgroundBrush}" Margin="20">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="300"/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <StackPanel Grid.Column="0" Spacing="12">
+                        <TextBlock Text="Optimization Presets" FontSize="16" FontWeight="Bold" Foreground="{DynamicResource AccentBrush}"/>
+                        
+                        <Border BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" Padding="12" CornerRadius="4" Background="#2D2D2D">
+                            <StackPanel Spacing="8">
+                                <TextBlock Text="Select a preset to apply multiple tweaks at once" Foreground="#CCCCCC" TextWrapping="Wrap"/>
+                                <ComboBox Name="PresetComboBox" Background="#3F3F3F" Foreground="{DynamicResource TextBrush}" Padding="8" FontSize="12">
+                                    <ComboBoxItem>Gaming</ComboBoxItem>
+                                    <ComboBoxItem>Minimal</ComboBoxItem>
+                                    <ComboBoxItem>Developer</ComboBoxItem>
+                                    <ComboBoxItem>Standard</ComboBoxItem>
+                                </ComboBox>
+                                <Button Content="▶ Apply Preset" Style="{StaticResource ModernButton}" Click="ApplyPreset_Click" Margin="0,8,0,0"/>
+                            </StackPanel>
+                        </Border>
+                        
+                        <TextBlock Text="Individual Tweaks" FontSize="16" FontWeight="Bold" Foreground="{DynamicResource AccentBrush}" Margin="0,16,0,0"/>
+                        
+                        <Border BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" Padding="12" CornerRadius="4" Background="#2D2D2D">
+                            <StackPanel Spacing="10">
+                                <CheckBox Content="🔐 Disable Telemetry" IsChecked="True" Foreground="{DynamicResource TextBrush}" FontSize="12"/>
+                                <CheckBox Content="📦 Remove Bloatware" IsChecked="True" Foreground="{DynamicResource TextBrush}" FontSize="12"/>
+                                <CheckBox Content="⚙️ Disable Unnecessary Services" IsChecked="True" Foreground="{DynamicResource TextBrush}" FontSize="12"/>
+                                <CheckBox Content="👁️ Disable Activity History" IsChecked="True" Foreground="{DynamicResource TextBrush}" FontSize="12"/>
+                                <CheckBox Content="🤖 Remove AI Features (Copilot)" IsChecked="True" Foreground="{DynamicResource TextBrush}" FontSize="12"/>
+                                <CheckBox Content="🔍 Disable Windows Search AI" IsChecked="False" Foreground="{DynamicResource TextBrush}" FontSize="12"/>
+                                <CheckBox Content="🚫 Block AI Reinstallation" IsChecked="True" Foreground="{DynamicResource TextBrush}" FontSize="12"/>
+                                <CheckBox Content="🔗 Enable DNS over HTTPS" IsChecked="False" Foreground="{DynamicResource TextBrush}" FontSize="12"/>
+                                <Separator Background="{DynamicResource BorderBrush}" Margin="0,8"/>
+                                <Button Content="✓ Apply Selected Tweaks" Style="{StaticResource ModernButton}" Click="ApplyTweaks_Click" Margin="0,8,0,0"/>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                    
+                    <!-- Sidebar -->
+                    <StackPanel Grid.Column="1" Margin="20,0,0,0" Spacing="12">
+                        <Border BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" Padding="12" CornerRadius="4" Background="#2D2D2D">
+                            <StackPanel Spacing="8">
+                                <TextBlock Text="Quick Info" FontSize="14" FontWeight="Bold" Foreground="{DynamicResource AccentBrush}"/>
+                                <Separator Background="{DynamicResource BorderBrush}"/>
+                                <TextBlock Text="Status:" FontWeight="Bold" Foreground="{DynamicResource TextBrush}"/>
+                                <TextBlock Name="StatusText" Text="Ready" Foreground="{DynamicResource SuccessBrush}" TextWrapping="Wrap"/>
+                                <TextBlock Text="System:" FontWeight="Bold" Foreground="{DynamicResource TextBrush}" Margin="0,8,0,0"/>
+                                <TextBlock Name="SystemInfoText" Text="Windows 11 23H2" Foreground="#CCCCCC" TextWrapping="Wrap" FontSize="11"/>
+                            </StackPanel>
+                        </Border>
+                        
+                        <Border BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" Padding="12" CornerRadius="4" Background="#2D2D2D">
+                            <StackPanel Spacing="8">
+                                <TextBlock Text="Restore Point" FontSize="14" FontWeight="Bold" Foreground="{DynamicResource AccentBrush}"/>
+                                <Separator Background="{DynamicResource BorderBrush}"/>
+                                <TextBlock Text="Create before applying changes for safety" Foreground="#CCCCCC" TextWrapping="Wrap" FontSize="11"/>
+                                <Button Content="📸 Create Restore Point" Style="{StaticResource ModernButton}" Click="CreateRestorePoint_Click" Margin="0,8,0,0" Background="#107C10"/>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+            
+            <!-- Tools/Install Tab -->
+            <TabItem Header="📥 Tools & Install" Name="ToolsTab">
+                <Grid Background="{DynamicResource BackgroundBrush}" Margin="20">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="300"/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <StackPanel Grid.Column="0" Spacing="12">
+                        <TextBlock Text="Tools & Applications Catalog" FontSize="16" FontWeight="Bold" Foreground="{DynamicResource AccentBrush}"/>
+                        
+                        <ComboBox Name="ToolsCategoryComboBox" Background="#3F3F3F" Foreground="{DynamicResource TextBrush}" Padding="8" FontSize="12" SelectionChanged="ToolsCategory_Changed">
+                            <ComboBoxItem>Games (Launchers)</ComboBoxItem>
+                            <ComboBoxItem>Browsers</ComboBoxItem>
+                            <ComboBoxItem>Development Tools</ComboBoxItem>
+                            <ComboBoxItem>Productivity</ComboBoxItem>
+                            <ComboBoxItem>Media Tools</ComboBoxItem>
+                            <ComboBoxItem>Utilities</ComboBoxItem>
+                            <ComboBoxItem>Microsoft Tools</ComboBoxItem>
+                        </ComboBox>
+                        
+                        <Border BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" Padding="12" CornerRadius="4" Background="#2D2D2D" Height="300">
+                            <ListBox Name="ToolsListBox" Background="#2D2D2D" Foreground="{DynamicResource TextBrush}" BorderThickness="0" Padding="8" SelectionChanged="Tool_Selected">
+                                <ListBoxItem>Loading tools...</ListBoxItem>
+                            </ListBox>
+                        </Border>
+                        
+                        <StackPanel Spacing="8">
+                            <TextBlock Name="ToolDescriptionText" Text="Select a tool to see details" Foreground="#CCCCCC" TextWrapping="Wrap" FontSize="11"/>
+                            <Button Content="📥 Install Selected Tool" Style="{StaticResource ModernButton}" Click="InstallTool_Click" Margin="0,8,0,0"/>
+                        </StackPanel>
+                        
+                        <TextBlock Text="Recommended Bundles" FontSize="14" FontWeight="Bold" Foreground="{DynamicResource AccentBrush}" Margin="0,16,0,0"/>
+                        <StackPanel Spacing="6">
+                            <Button Content="💻 Developer Bundle" Style="{StaticResource ModernButton}" Background="#005A9E" Click="InstallBundle_Click" Tag="Developer"/>
+                            <Button Content="🎮 Gamer Bundle" Style="{StaticResource ModernButton}" Background="#9D00FF" Click="InstallBundle_Click" Tag="Gamer"/>
+                            <Button Content="⚡ Minimal Bundle" Style="{StaticResource ModernButton}" Background="#107C10" Click="InstallBundle_Click" Tag="Minimal"/>
+                            <Button Content="👔 Professional Bundle" Style="{StaticResource ModernButton}" Background="#7C2815" Click="InstallBundle_Click" Tag="Professional"/>
+                            <Button Content="🎨 Creator Bundle" Style="{StaticResource ModernButton}" Background="#E3008C" Click="InstallBundle_Click" Tag="Creator"/>
+                        </StackPanel>
+                    </StackPanel>
+                    
+                    <!-- Installation Info Sidebar -->
+                    <StackPanel Grid.Column="1" Margin="20,0,0,0" Spacing="12">
+                        <Border BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" Padding="12" CornerRadius="4" Background="#2D2D2D">
+                            <StackPanel Spacing="8">
+                                <TextBlock Text="Package Manager" FontSize="14" FontWeight="Bold" Foreground="{DynamicResource AccentBrush}"/>
+                                <Separator Background="{DynamicResource BorderBrush}"/>
+                                <TextBlock Text="WinGet Status:" FontWeight="Bold" Foreground="{DynamicResource TextBrush}"/>
+                                <TextBlock Name="WinGetStatusText" Text="Checking..." Foreground="#FFB900" FontSize="11"/>
+                                <Button Content="🔧 Detect WinGet" Style="{StaticResource ModernButton}" Click="DetectWinGet_Click" Margin="0,8,0,0" FontSize="11" Padding="8,6"/>
+                            </StackPanel>
+                        </Border>
+                        
+                        <Border BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" Padding="12" CornerRadius="4" Background="#2D2D2D">
+                            <StackPanel Spacing="8">
+                                <TextBlock Text="Installation Log" FontSize="14" FontWeight="Bold" Foreground="{DynamicResource AccentBrush}"/>
+                                <Separator Background="{DynamicResource BorderBrush}"/>
+                                <TextBlock Name="InstallLogText" Text="Ready for installation" Foreground="#CCCCCC" TextWrapping="Wrap" FontSize="10"/>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+            
+            <!-- Cleanup Tab -->
+            <TabItem Header="🧹 Cleanup" Name="CleanupTab">
+                <Grid Background="{DynamicResource BackgroundBrush}" Margin="20">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="300"/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <StackPanel Grid.Column="0" Spacing="12">
+                        <TextBlock Text="System Cleanup" FontSize="16" FontWeight="Bold" Foreground="{DynamicResource AccentBrush}"/>
+                        
+                        <Border BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" Padding="12" CornerRadius="4" Background="#2D2D2D">
+                            <StackPanel Spacing="10">
+                                <TextBlock Text="Disk Cleanup" FontSize="13" FontWeight="Bold" Foreground="{DynamicResource TextBrush}"/>
+                                <CheckBox Content="🗑️ Clear Temporary Files" IsChecked="True" Foreground="{DynamicResource TextBrush}" FontSize="12"/>
+                                <CheckBox Content="📋 Clear Event Logs" IsChecked="False" Foreground="{DynamicResource TextBrush}" FontSize="12"/>
+                                <CheckBox Content="💾 Optimize Disk Space" IsChecked="False" Foreground="{DynamicResource TextBrush}" FontSize="12"/>
+                                <CheckBox Content="🗜️ Compress Old Files (NTFS)" IsChecked="False" Foreground="{DynamicResource TextBrush}" FontSize="12"/>
+                                <Separator Background="{DynamicResource BorderBrush}" Margin="0,8"/>
+                                <Button Content="▶ Start Cleanup" Style="{StaticResource ModernButton}" Background="{DynamicResource SuccessBrush}" Click="StartCleanup_Click" Margin="0,8,0,0"/>
+                            </StackPanel>
+                        </Border>
+                        
+                        <TextBlock Text="System Optimization" FontSize="14" FontWeight="Bold" Foreground="{DynamicResource AccentBrush}" Margin="0,16,0,0"/>
+                        
+                        <Border BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" Padding="12" CornerRadius="4" Background="#2D2D2D">
+                            <StackPanel Spacing="10">
+                                <TextBlock Text="Performance Tuning" FontSize="13" FontWeight="Bold" Foreground="{DynamicResource TextBrush}"/>
+                                <CheckBox Content="🎯 Optimize Visual Effects" IsChecked="True" Foreground="{DynamicResource TextBrush}" FontSize="12"/>
+                                <CheckBox Content="🚀 Disable Unnecessary Animations" IsChecked="True" Foreground="{DynamicResource TextBrush}" FontSize="12"/>
+                                <Button Content="▶ Run Optimization" Style="{StaticResource ModernButton}" Click="RunOptimization_Click" Margin="0,8,0,0"/>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                    
+                    <!-- Cleanup Info -->
+                    <StackPanel Grid.Column="1" Margin="20,0,0,0" Spacing="12">
+                        <Border BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" Padding="12" CornerRadius="4" Background="#2D2D2D">
+                            <StackPanel Spacing="8">
+                                <TextBlock Text="Cleanup Summary" FontSize="14" FontWeight="Bold" Foreground="{DynamicResource AccentBrush}"/>
+                                <Separator Background="{DynamicResource BorderBrush}"/>
+                                <TextBlock Text="Files Removed:" FontWeight="Bold" Foreground="{DynamicResource TextBrush}"/>
+                                <TextBlock Name="FilesRemovedText" Text="0" Foreground="#CCCCCC"/>
+                                <TextBlock Text="Space Freed:" FontWeight="Bold" Foreground="{DynamicResource TextBrush}" Margin="0,8,0,0"/>
+                                <TextBlock Name="SpaceFreedText" Text="0 MB" Foreground="{DynamicResource SuccessBrush}" FontWeight="Bold"/>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+            
+            <!-- Performance Tab -->
+            <TabItem Header="📊 Performance" Name="PerformanceTab">
+                <Grid Background="{DynamicResource BackgroundBrush}" Margin="20">
+                    <StackPanel Spacing="12">
+                        <TextBlock Text="System Performance Monitor" FontSize="16" FontWeight="Bold" Foreground="{DynamicResource AccentBrush}"/>
+                        
+                        <Grid ColumnSpacing="12">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            
+                            <!-- CPU Info -->
+                            <Border Grid.Column="0" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" Padding="16" CornerRadius="4" Background="#2D2D2D">
+                                <StackPanel Spacing="8">
+                                    <TextBlock Text="CPU" FontSize="13" FontWeight="Bold" Foreground="{DynamicResource AccentBrush}"/>
+                                    <TextBlock Name="CPUUsageText" Text="Usage: 0%" Foreground="{DynamicResource TextBrush}" FontSize="12"/>
+                                    <TextBlock Name="CPUCoresText" Text="Cores: 0" Foreground="#CCCCCC" FontSize="11"/>
+                                    <TextBlock Name="CPUSpeedText" Text="Speed: 0 MHz" Foreground="#CCCCCC" FontSize="11"/>
+                                </StackPanel>
+                            </Border>
+                            
+                            <!-- Memory Info -->
+                            <Border Grid.Column="1" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" Padding="16" CornerRadius="4" Background="#2D2D2D">
+                                <StackPanel Spacing="8">
+                                    <TextBlock Text="Memory" FontSize="13" FontWeight="Bold" Foreground="{DynamicResource AccentBrush}"/>
+                                    <TextBlock Name="MemoryUsageText" Text="Usage: 0%" Foreground="{DynamicResource TextBrush}" FontSize="12"/>
+                                    <TextBlock Name="MemoryAmountText" Text="0 GB / 0 GB" Foreground="#CCCCCC" FontSize="11"/>
+                                    <ProgressBar Name="MemoryProgressBar" Background="#3F3F3F" Foreground="{DynamicResource AccentBrush}" Height="4" Margin="0,4,0,0"/>
+                                </StackPanel>
+                            </Border>
+                            
+                            <!-- Disk Info -->
+                            <Border Grid.Column="2" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" Padding="16" CornerRadius="4" Background="#2D2D2D">
+                                <StackPanel Spacing="8">
+                                    <TextBlock Text="Disk" FontSize="13" FontWeight="Bold" Foreground="{DynamicResource AccentBrush}"/>
+                                    <TextBlock Name="DiskUsageText" Text="Usage: 0%" Foreground="{DynamicResource TextBrush}" FontSize="12"/>
+                                    <TextBlock Name="DiskAmountText" Text="0 GB Free" Foreground="#CCCCCC" FontSize="11"/>
+                                    <ProgressBar Name="DiskProgressBar" Background="#3F3F3F" Foreground="{DynamicResource SuccessBrush}" Height="4" Margin="0,4,0,0"/>
+                                </StackPanel>
+                            </Border>
+                            
+                            <!-- Processes -->
+                            <Border Grid.Column="3" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" Padding="16" CornerRadius="4" Background="#2D2D2D">
+                                <StackPanel Spacing="8">
+                                    <TextBlock Text="Processes" FontSize="13" FontWeight="Bold" Foreground="{DynamicResource AccentBrush}"/>
+                                    <TextBlock Name="ProcessCountText" Text="Running: 0" Foreground="{DynamicResource TextBrush}" FontSize="12"/>
+                                    <TextBlock Name="TopProcessText" Text="Top: N/A" Foreground="#CCCCCC" FontSize="11"/>
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+                        
+                        <!-- Top Processes -->
+                        <TextBlock Text="Top Processes by Memory" FontSize="14" FontWeight="Bold" Foreground="{DynamicResource AccentBrush}" Margin="0,16,0,0"/>
+                        
+                        <Border BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" Padding="12" CornerRadius="4" Background="#2D2D2D" Height="200">
+                            <ListBox Name="TopProcessesListBox" Background="#2D2D2D" Foreground="{DynamicResource TextBrush}" BorderThickness="0" Padding="8">
+                                <ListBoxItem>Loading processes...</ListBoxItem>
+                            </ListBox>
+                        </Border>
+                        
+                        <Button Content="🔄 Refresh Stats" Style="{StaticResource ModernButton}" Click="RefreshStats_Click" Width="150" HorizontalAlignment="Left"/>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+            
+            <!-- Audit Log Tab -->
+            <TabItem Header="📝 Audit Log" Name="AuditTab">
+                <Grid Background="{DynamicResource BackgroundBrush}" Margin="20">
+                    <StackPanel Spacing="12">
+                        <TextBlock Text="Change History & Audit Log" FontSize="16" FontWeight="Bold" Foreground="{DynamicResource AccentBrush}"/>
+                        
+                        <Border BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" Padding="12" CornerRadius="4" Background="#2D2D2D">
+                            <StackPanel Spacing="8" Orientation="Horizontal">
+                                <Button Content="📂 Load Audit Log" Style="{StaticResource ModernButton}" Click="LoadAuditLog_Click" Width="140"/>
+                                <Button Content="💾 Save/Export" Style="{StaticResource ModernButton}" Click="ExportAuditLog_Click" Width="140" Background="#107C10"/>
+                                <Button Content="↩️ Full Rebloat" Style="{StaticResource ModernButton}" Click="FullRebloat_Click" Width="140" Background="{DynamicResource ErrorBrush}"/>
+                                <Button Content="🗑️ Clear Log" Style="{StaticResource ModernButton}" Click="ClearAuditLog_Click" Width="140" Background="#6C757D"/>
+                            </StackPanel>
+                        </Border>
+                        
+                        <TextBlock Text="Recent Changes" FontSize="14" FontWeight="Bold" Foreground="{DynamicResource AccentBrush}" Margin="0,8,0,0"/>
+                        
+                        <Border BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" Padding="0" CornerRadius="4" Background="#2D2D2D" Height="400">
+                            <DataGrid Name="AuditLogGrid" Background="#2D2D2D" Foreground="{DynamicResource TextBrush}" BorderThickness="0" 
+                                     AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Timestamp" Binding="{Binding Timestamp}" Width="150"/>
+                                    <DataGridTextColumn Header="Category" Binding="{Binding Category}" Width="100"/>
+                                    <DataGridTextColumn Header="Target" Binding="{Binding Target}" Width="150"/>
+                                    <DataGridTextColumn Header="Old Value" Binding="{Binding OldValue}" Width="100"/>
+                                    <DataGridTextColumn Header="New Value" Binding="{Binding NewValue}" Width="100"/>
+                                    <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="80"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </Border>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+            
+            <!-- Plugins Tab -->
+            <TabItem Header="🔌 Plugins" Name="PluginsTab">
+                <Grid Background="{DynamicResource BackgroundBrush}" Margin="20">
+                    <StackPanel Spacing="12">
+                        <TextBlock Text="Plugin Management" FontSize="16" FontWeight="Bold" Foreground="{DynamicResource AccentBrush}"/>
+                        
+                        <Border BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" Padding="12" CornerRadius="4" Background="#2D2D2D">
+                            <StackPanel Spacing="8" Orientation="Horizontal">
+                                <Button Content="🔄 Reload Plugins" Style="{StaticResource ModernButton}" Click="ReloadPlugins_Click" Width="150"/>
+                                <Button Content="📁 Open Plugin Folder" Style="{StaticResource ModernButton}" Click="OpenPluginsFolder_Click" Width="150" Background="#6C757D"/>
+                                <TextBlock Text="Plugins Folder: plugins/" VerticalAlignment="Center" Foreground="#CCCCCC" Margin="16,0,0,0" FontSize="11"/>
+                            </StackPanel>
+                        </Border>
+                        
+                        <TextBlock Text="Available Plugins" FontSize="14" FontWeight="Bold" Foreground="{DynamicResource AccentBrush}" Margin="0,8,0,0"/>
+                        
+                        <Border BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" Padding="0" CornerRadius="4" Background="#2D2D2D" Height="350">
+                            <ListBox Name="PluginsListBox" Background="#2D2D2D" Foreground="{DynamicResource TextBrush}" BorderThickness="0" Padding="8" SelectionChanged="Plugin_Selected">
+                                <ListBoxItem>No plugins loaded. Add .ps1 files to plugins/ folder</ListBoxItem>
+                            </ListBox>
+                        </Border>
+                        
+                        <Border BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" Padding="12" CornerRadius="4" Background="#2D2D2D">
+                            <StackPanel Spacing="8">
+                                <TextBlock Name="PluginDetailsText" Text="Select a plugin to see details" Foreground="#CCCCCC" TextWrapping="Wrap" FontSize="11"/>
+                                <Button Content="▶ Execute Plugin" Style="{StaticResource ModernButton}" Click="ExecutePlugin_Click" Margin="0,8,0,0" Width="150"/>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+            
+            <!-- Settings Tab -->
+            <TabItem Header="⚙️ Settings" Name="SettingsTab">
+                <Grid Background="{DynamicResource BackgroundBrush}" Margin="20">
+                    <StackPanel Spacing="12" MaxWidth="600">
+                        <TextBlock Text="WinPurge Settings" FontSize="16" FontWeight="Bold" Foreground="{DynamicResource AccentBrush}"/>
+                        
+                        <Border BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" Padding="12" CornerRadius="4" Background="#2D2D2D">
+                            <StackPanel Spacing="12">
+                                <TextBlock Text="General" FontSize="13" FontWeight="Bold" Foreground="{DynamicResource AccentBrush}"/>
+                                <CheckBox Content="✓ Automatically create restore points" IsChecked="True" Foreground="{DynamicResource TextBrush}" FontSize="12"/>
+                                <CheckBox Content="✓ Require confirmation for destructive operations" IsChecked="True" Foreground="{DynamicResource TextBrush}" FontSize="12"/>
+                                <CheckBox Content="✓ Check for updates on startup" IsChecked="True" Foreground="{DynamicResource TextBrush}" FontSize="12"/>
+                            </StackPanel>
+                        </Border>
+                        
+                        <Border BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" Padding="12" CornerRadius="4" Background="#2D2D2D">
+                            <StackPanel Spacing="12">
+                                <TextBlock Text="Logging" FontSize="13" FontWeight="Bold" Foreground="{DynamicResource AccentBrush}"/>
+                                <StackPanel Spacing="4">
+                                    <TextBlock Text="Log Level:" FontWeight="Bold" Foreground="{DynamicResource TextBrush}" FontSize="11"/>
+                                    <ComboBox Background="#3F3F3F" Foreground="{DynamicResource TextBrush}" Padding="8" FontSize="11">
+                                        <ComboBoxItem>DEBUG</ComboBoxItem>
+                                        <ComboBoxItem>INFO</ComboBoxItem>
+                                        <ComboBoxItem IsSelected="True">WARNING</ComboBoxItem>
+                                        <ComboBoxItem>ERROR</ComboBoxItem>
+                                    </ComboBox>
+                                </StackPanel>
+                                <CheckBox Content="✓ Log to file" IsChecked="True" Foreground="{DynamicResource TextBrush}" FontSize="12"/>
+                            </StackPanel>
+                        </Border>
+                        
+                        <Border BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" Padding="12" CornerRadius="4" Background="#2D2D2D">
+                            <StackPanel Spacing="12">
+                                <TextBlock Text="Theme" FontSize="13" FontWeight="Bold" Foreground="{DynamicResource AccentBrush}"/>
+                                <StackPanel Spacing="4">
+                                    <TextBlock Text="Application Theme:" FontWeight="Bold" Foreground="{DynamicResource TextBrush}" FontSize="11"/>
+                                    <ComboBox Background="#3F3F3F" Foreground="{DynamicResource TextBrush}" Padding="8" FontSize="11">
+                                        <ComboBoxItem IsSelected="True">Dark (Default)</ComboBoxItem>
+                                        <ComboBoxItem>Light</ComboBoxItem>
+                                        <ComboBoxItem>Auto (System)</ComboBoxItem>
+                                    </ComboBox>
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+                        
+                        <StackPanel Spacing="8" Orientation="Horizontal" Margin="0,16,0,0">
+                            <Button Content="💾 Save Settings" Style="{StaticResource ModernButton}" Width="150" Background="{DynamicResource SuccessBrush}"/>
+                            <Button Content="🔄 Reset to Defaults" Style="{StaticResource ModernButton}" Width="150" Background="#6C757D"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+        </TabControl>
+        
+        <!-- Footer -->
+        <Border Grid.Row="2" Background="#0F0F0F" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="0,1,0,0" Padding="20,12">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                
+                <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="16" VerticalAlignment="Center">
+                    <TextBlock Name="StatusBarText" Text="Ready" Foreground="{DynamicResource SuccessBrush}" FontSize="11"/>
+                    <Separator Background="{DynamicResource BorderBrush}" Width="1" Height="16" VerticalAlignment="Center"/>
+                    <TextBlock Name="ProgressText" Text="No operations in progress" Foreground="#CCCCCC" FontSize="11"/>
+                </StackPanel>
+                
+                <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="16" VerticalAlignment="Center">
+                    <TextBlock Text="v2.0" Foreground="#888888" FontSize="11"/>
+                    <TextBlock Text="GitHub" Foreground="{DynamicResource AccentBrush}" FontSize="11" Cursor="Hand"/>
+                    <TextBlock Text="Docs" Foreground="{DynamicResource AccentBrush}" FontSize="11" Cursor="Hand"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>
